@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mendapatkan Lokasi Pengguna</title>
+</head>
+<body>
+    <h1>Mendapatkan Lokasi Pengguna</h1>
+    <button onclick="getLocation()">Dapatkan Lokasi Saya</button>
+    <p id="result"></p>
+
+    <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                // Mintalah izin pengguna untuk mengakses lokasi
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                // Peramban tidak mendukung geolokasi
+                document.getElementById("result").innerHTML = "Geolokasi tidak didukung oleh peramban ini.";
+            }
+        }
+
+        function showPosition(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+
+            // Tampilkan hasil lokasi pada elemen dengan id "result"
+            document.getElementById("result").innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
+        }
+
+        function showError(error) {
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    document.getElementById("result").innerHTML = "Akses geolokasi ditolak oleh pengguna.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    document.getElementById("result").innerHTML = "Informasi lokasi tidak tersedia.";
+                    break;
+                case error.TIMEOUT:
+                    document.getElementById("result").innerHTML = "Permintaan lokasi pengguna timeout.";
+                    break;
+                case error.UNKNOWN_ERROR:
+                    document.getElementById("result").innerHTML = "Terjadi kesalahan yang tidak diketahui.";
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>
